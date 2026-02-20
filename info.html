@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المعلومات - مبادرة 49</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0; padding: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f8f9fa; color: #333; line-height: 1.6;
+            overflow-x: hidden; /* لمنع أي اهتزاز عرضي في الهاتف */
+        }
+
+        /* إصلاح الهيدر ليناسب الهاتف والكمبيوتر */
+        .main-header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 0 5%; background-color: rgba(0, 0, 0, 0.85);
+            color: white; position: fixed; top: 0; left: 0; right: 0;
+            z-index: 1000; backdrop-filter: blur(8px); height: 65px;
+        }
+        .header-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .header-logo { width: 40px; height: 40px; object-fit: cover; border-radius: 5px; }
+        .brand-name { font-size: 16px; font-weight: bold; white-space: nowrap; }
+        
+        .header-left { display: flex; gap: 8px; }
+        .nav-btn {
+            background-color: rgba(255, 255, 255, 0.9);
+            color: black; text-decoration: none; padding: 6px 12px;
+            border-radius: 6px; font-size: 12px; font-weight: bold; 
+            transition: 0.3s; white-space: nowrap;
+        }
+
+        /* الحاوية الرئيسية */
+        .container { width: 92%; max-width: 1100px; margin: 90px auto 40px; }
+        
+        .info-banner {
+            width: 100%; border-radius: 15px; overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1); margin-bottom: 25px;
+        }
+        .info-banner img { width: 100%; max-height: 400px; object-fit: cover; display: block; background-color: #ddd; }
+
+        .intro-text {
+            background: white; padding: 20px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); text-align: justify;
+            margin-bottom: 30px; font-size: 15px;
+        }
+
+        /* شبكة المربعات - عمودين دائماً */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; margin-bottom: 30px;
+        }
+        .info-card {
+            background: white; padding: 15px; border-radius: 12px;
+            border-right: 4px solid #2ecc71;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            display: flex; flex-direction: column;
+        }
+        .info-card h3 { margin: 0 0 8px; color: #222; font-size: 15px; }
+        .info-card p { color: #666; font-size: 12px; margin: 0; line-height: 1.5; }
+
+        /* قسم الخاتمة */
+        .conclusion-section {
+            background: #fff; padding: 25px; border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 50px;
+        }
+        .conclusion-section h2 { border-bottom: 2px solid #2ecc71; display: inline-block; padding-bottom: 5px; margin-top: 0; font-size: 18px; }
+
+        /* إجبار أيقونات الفوتر على الظهور في الهاتف */
+        footer { background-color: #111; color: white; padding: 30px 10px; text-align: center; }
+        .social-icons { display: flex !important; justify-content: center !important; gap: 18px !important; margin: 20px 0 !important; }
+        .social-icons a { color: white !important; font-size: 26px !important; text-decoration: none; display: inline-block !important; transition: 0.3s; opacity: 1 !important; }
+        .footer-bottom { border-top: 1px solid #333; padding-top: 20px; font-size: 11px; color: #888; direction: ltr; }
+
+        /* تعديلات ذكية للهواتف (تطبق تلقائياً عند فتح الموقع من الجوال) */
+        @media (max-width: 600px) {
+            .main-header { padding: 0 3%; height: 60px; }
+            .brand-name { font-size: 13px; }
+            .nav-btn { padding: 5px 8px; font-size: 10px; }
+            .header-logo { width: 35px; height: 35px; }
+            
+            .info-grid { gap: 10px; }
+            .info-card { padding: 10px; }
+            .info-card h3 { font-size: 13px; }
+            .info-card p { font-size: 11px; }
+            
+            .intro-text, .conclusion-section { padding: 15px; font-size: 14px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-right">
+            <img src="images/header.jpg" alt="Logo" class="header-logo">
+            <span class="brand-name">مبادرة 49 الطلابية الخيرية</span>
+        </div>
+        <nav class="header-left">
+            <a href="index.html" class="nav-btn">الرئيسية</a>
+            <a href="#footer" class="nav-btn">تواصل معنا</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="info-banner">
+            <img src="images/pic06.jpg" alt="Info Banner">
+        </div>
+
+        <div class="intro-text">
+            تتعددُ مسارات وبرامج العطاء في مبادرة 49 الطلابية الخيرية وتتنوع قنواتها، لترسم معًا لوحةً متكاملة من التكافل الاجتماعي الذي يلامس احتياجات الواقع بمرونةٍ وإبداع. فمن قلب هذه الرؤية انطلقت برامجنا التمويلية المبتكرة، حيث يبرز (برنامج الأسهم الخيرية) كبوابة تتيح للجميع فرصة الاستثمار في فعل الخير عبر امتلاك أسهمٍ رمزية محددة القيمة، تجعل من المساهمة شريكًا أساسيًا في كل أثرٍ نتركه. ولا تقفُ المبادرة عند هذا الحد، بل تمدُّ جسورها نحو المجتمع من خلال (الأطباق الخيرية) التي تمزج بين روح العمل الجماعي ولذة العطاء، محولةً الجهود البسيطة إلى موارد تسدُّ حاجةً وتصنعُ بسمة. ولأننا نؤمن بأن فيض الكرم لا حدود له، فقد أتحنا برنامج (التبرع المباشر) عبر حساباتنا المفتوحة، لتكون بمثابة القناة الدائمة الأسرع والأنقى لكل من يرغب في وضع بصمته الخيرية مباشرةً في رصيد الإنسانية، مؤكدين بذلك أن كل جهدٍ يُبذل هو لبنةٌ أساسية في بناء مجتمعٍ أكثر تراحماً وعطاء.
+        </div>
+
+        <div class="info-grid">
+            <div class="info-card">
+                <h3>كيف أتت فكرتها</h3>
+                <p>جاءت من الوضع الذي يعيشه الطالب الجامعي في كافة الجامعات، ومعاناته لتلبية أبسط احتياجات الدراسة ومواصلة التعليم وعجزه عن توفير أساسيات الدراسة والتي تشكل عائقا كبيرا أمام تعليمه.</p>
+            </div>
+            <div class="info-card">
+                <h3>متى تأسست</h3>
+                <p>عقد المجلس الأول لادارة المبادرة الطلابية الخيرية في يوم الاثنين بتاريخ 16 شعبان-1445 هجرية الموافق 26/03/2024 وتم فيه وضع حجر الأساس وخطة العمل.</p>
+            </div>
+            <div class="info-card">
+                <h3>الرسالة</h3>
+                <p> تعمل مبادرة 49 الطلابية الخيرية على دعم الأسر المحتاجة والتخفيف من معاناتها من خلال تنفيذ حملات موسمية تشمل افطار الصائمين ومشاريع سقي الماء، بما يسهم في تعزيز التكافل المجتمعي والاستجابة للاحتياجات الانسانية.</p>
+            </div>
+            <div class="info-card">
+                <h3>القيم</h3>
+                <p>تستند المبادرة في عملها الى قيم ثابتة تشمل: التكافل، الشفافية، العمل الجماعي، المسؤولية، الاتقان، العطاء وخدمة المجتمع.</p>
+            </div>
+            <div class="info-card">
+                <h3>الهيكل التنظيمي</h3>
+                <p>يتكون الهيكل الخاص بالمبادرة من رئيس المبادرة ونائبه، المدير التنفيذي، فريق الاعلام، المسؤول المالي، مسؤولو المشاريع والمشتريات، وفرق النزول الميداني.</p>
+            </div>
+            <div class="info-card">
+                <h3>الدعم</h3>
+                <p>تعتمد المبادرة حالياً على التبرعات المالية المقدمة من الأفراد والتي يتم جمعها عبر برامج سلسة مخصصة لدعم مشاريع المبادرة، وتأمل مستقبلاً بتوسيع المصادر لتشمل الجهات والمؤسسات، بما يسهم في تعزيز استدامة العمل الخيري وتوسيع نطاق أثره المجتمعي.</p>
+            </div>
+        </div>
+
+        <div class="conclusion-section">
+            <h2>الخاتمة</h2>
+            <p>تؤمن مبادرة 49 الطلابية الخيرية أن العمل الإنساني يبدأ بخطوة صغيرة، لكنه قادر على صناعة أثر كبير عندما يجتمع الإخلاص مع روح العطاء. ومن رحم التعاون الطلابي، انطلقت المبادرة لتكون نموذجًا حيًا لقيم التكافل والتراحم، وتسعى باستمرار لأن تكون يدًا ممتدة لكل محتاج، وأملًا يخفف معاناة من ضاقت بهم الظروف. وستواصل المبادرة مسيرتها بإيمان راسخ بأن العطاء لا يُقاس بحجمه، بل بأثره في حياة الآخرين، وبأن العمل الجماعي قادر على إحداث تغيير حقيقي في المجتمع..</p>
+        </div>
+    </div>
+
+     <footer id="footer">
+        <div class="footer-title">تواصل معنا</div>
+        <div class="social-icons">
+            <a href="https://wa.me/+967776063211"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.facebook.com/share/16CNXhFw39/"><i class="fab fa-facebook"></i></a>
+            <a href="https://www.instagram.com/bat_ch49?igsh=eXViZGF1YmNvM20x"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-telegram"></i></a>
+            <a href="mailto:initiative49@gmail.com"><i class="far fa-envelope"></i></a>
+        </div>
+        <div class="footer-bottom">
+            <span>© جميع الحقوق محفوظة لدى المبادرة</span> | 
+            <span>Designed by: <b>Prestige_Malook</b></span>
+        </div>
+    </footer>
+
+</body>
+</html>
