@@ -3,20 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مبادرة 49 - عدن</title>
+    <title>مبادرة 49 الطلابية - عدن</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --main-color: #2c3e50; --accent-color: #2ecc71; --gold: #f1c40f; --blue: #3498db; --red: #e74c3c; }
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; color: #333; overflow-x: hidden; padding-bottom: 60px; }
 
         /* الهيدر والبانر */
-        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 0 5%; background: rgba(0,0,0,0.85); color: white; position: fixed; top: 0; left: 0; right: 0; z-index: 1000; backdrop-filter: blur(10px); height: 65px; }
-        .header-logo { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; }
-        .brand-name { font-size: 16px; font-weight: bold; }
+       /* الهيدر المحسن بالمحاذاة الصحيحة */
+.main-header { 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 5%; 
+    background: rgba(0,0,0,0.85); 
+    color: white; 
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    right: 0; 
+    z-index: 1000; 
+    backdrop-filter: blur(10px); 
+    height: 65px; 
+}
 
-        .hero-banner { width: 100%; height: 300px; background: url('images/0header.jpg') center/cover no-repeat; margin-top: 65px; position: relative; border-bottom: 5px solid var(--accent-color); }
-        .hero-overlay { position: absolute; bottom: -25px; left: 50%; transform: translateX(-50%); width: 85%; max-width: 500px; background: white; padding: 15px; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); text-align: center; z-index: 10; border: 1px solid #eee; }
-        .hero-overlay h2 { margin: 0; color: #222; font-size: 16px; line-height: 1.4; }
+/* العنصر الحاوي للصورة والاسم لضمان استقامتهما */
+.header-right {
+    display: flex;
+    align-items: center; /* يوسط الصورة والنص عمودياً تماماً */
+    gap: 10px; /* مسافة ثابتة بين الصورة والنص */
+}
+
+.header-logo { 
+    width: 40px; 
+    height: 40px; 
+    border-radius: 5px; 
+    object-fit: cover; 
+    display: block; /* يمنع الفراغات العشوائية تحت الصورة */
+}
+
+.brand-name { 
+    font-size: 16px; 
+    font-weight: bold; 
+    line-height: 1; /* يرفع النص قليلاً للأعلى ليناسب منتصف الصورة */
+    display: flex;
+    align-items: center;
+}
+
+/* البانر كما هو مع لمسات بسيطة للتناسق */
+.hero-banner { 
+    width: 100%; 
+    height: 300px; 
+    background: url('images/0header.jpg') center/cover no-repeat; 
+    margin-top: 65px; 
+    position: relative; 
+    border-bottom: 5px solid var(--accent-color); 
+}
+
+.hero-overlay { 
+    position: absolute; 
+    bottom: -25px; 
+    left: 50%; 
+    transform: translateX(-50%); 
+    width: 85%; 
+    max-width: 500px; 
+    background: white; 
+    padding: 15px; 
+    border-radius: 12px; 
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+    text-align: center; 
+    z-index: 10; 
+    border: 1px solid #eee; 
+}
+
+.hero-overlay h2 { 
+    margin: 0; 
+    color: #222; 
+    font-size: 16px; 
+    line-height: 1.4; 
+}
 
         /* الأزرار الأربعة */
         .main-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 95%; max-width: 600px; margin: 50px auto 20px; }
@@ -115,7 +180,7 @@
             <img src="images/header.jpg" class="header-logo" alt="Logo">
             <span class="brand-name">مبادرة 49 الطلابية الخيرية</span>
         </div>
-        <a href="info.html" style="color:white; text-decoration:none; font-size:13px; background:var(--accent-color); padding:5px 10px; border-radius:5px;">التفاصيل</a>
+        <a href="info.html" style="color:white; text-decoration:none; font-size:13px; background:var(--accent-color); padding:5px 10px; border-radius:5px;">المزيد عن المبادرة</a>
     </header>
 
     <div class="hero-banner">
@@ -193,12 +258,13 @@
     </div>
 
     <footer class="fixed-footer">
-        © مبادرة 49 الطلابية | Design by: <b>Prestige_Malook</b>
+        © مبادرة 49 الطلابية | Designed by: <b>Prestige_Malook</b>
     </footer>
 
     <script>
         const achievements = [
              { title: "زيارة دار الأيتام", desc: "زيارة دار الرعاية والأمومة-المعلا", fullDesc: "قام شباب المبادرة باقامة زيارة متواضعة لدار الرعاية والأمومة في مديرية المعلا وقاموا بتبادل الحديث مع الأطفال والترفيه عنهم كما قامت المبادرة بايداع السلال الغذائية والملابس لقرابة ال32 طفلا اضافة الى توزيع الهدايا لهم.", img: "images/pic01.jpg", subImg1: "images/pic21.jpg", subImg2: "images/pic20.jpg", video: "https://www.instagram.com/reel/DGdMaUBszbl/?igsh=MXdoNXZneXJ3bHBoYQ==" },
+
             { title: "افطار الصائم للمارة", desc: "في شهر رمضان المبارك", fullDesc: "عملت مبادرة 49 الطلابية الخيرية على أن تبدأ أولى حملاتها في مدينة عدن واستغلالا للأجر العظيم الذي يجره شهر رمضان المبارك، بإقامة مشروع إفطار الصائم الذي استقبل بحماس طيب من جمهور الداعمين والمنتسبين للمبادرة حيث بلغ عدد الوجبات أكثر من 4000 وجبة استمر توزيعها لعشر أيام متواصلة.", img: "images/pic02.jpg", subImg1: "images/pic22.jpg", subImg2: "images/pic23.jpg", video: "https://www.facebook.com/share/p/17M7Rp5wHq/" },
             { title: "توزيع وجبات ساخنة", desc: "أحد منجزات حملة لبيك ياغزة-الجزء الأول", fullDesc: "بعد اطلاق حملة لبيك ياغزة في تاريخ 6/11/2024 ومرورها بالعديد من المراحل التي اتت أكلها، نجحت مبادرة 49 في ايصال المبالغ المجمعة وتوزيع مايقارب 1000 وجبة طعام ساخنة للمحاصرين في غزة.", img: "images/pic03.jpg", subImg1: "images/pic25.jpg", subImg2: "images/pic24.jpg", video: "https://www.instagram.com/reel/DGcTVqwCfhZ/?igsh=Z2J6YmV6NXZiMG0w" },
             { title: "توزيع حليب الأطفال", desc: "أحد منجزات حملة لبيك ياغزة-الجزء الثاني", fullDesc: "قامت مبادرة 49 الطلابية وكأحد مخرجات الجزء الثاني من حملة لبيك ياغزة الذي أقيم في أغسطس عام 2025 بتوزيع قرابة 18 علبة حليب للأطفال لرسم البهجة في وجوههم ودعما للأمهات نظرا للظروف القاسية التي يعيشونها.", img: "images/pic04.jpg", subImg1: "images/pic27.jpg", subImg2: "images/pic26.jpg", video: "#" },
