@@ -220,6 +220,32 @@
                     <a href="https://www.instagram.com/bat_ch49?igsh=eXViZGF1YmNvM20x"><i class="fab fa-instagram"></i></a>
  <a href="#"><i class="fab fa-telegram"></i></a>
                     <a href="mailto:initiative49@gmail.com"><i class="far fa-envelope"></i></a>
+</div>
+
+<div style="text-align: center; margin-top: 15px;">
+    <button onclick="openMessageModal()" style="background: rgba(46, 204, 113, 0.2); color: #2ecc71; border: 1px solid #2ecc71; padding: 10px 20px; border-radius: 50px; cursor: pointer; font-family: inherit; font-size: 14px; transition: 0.3s;">
+        أو قم بترك رسالة فورية ✉️
+    </button>
+</div>
+
+<div id="messageModal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.8); backdrop-filter: blur(5px); align-items: center; justify-content: center;">
+    <div style="background: #1a1a1a; width: 90%; max-width: 400px; padding: 25px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.1); position: relative; box-shadow: 0 20px 50px rgba(0,0,0,0.5);">
+        
+        <span onclick="closeMessageModal()" style="position: absolute; left: 20px; top: 15px; color: #777; cursor: pointer; font-size: 24px;">&times;</span>
+        
+        <h3 style="color: #2ecc71; margin-bottom: 20px; text-align: center; font-size: 18px;">أرسل رسالة للمبادرة</h3>
+
+        <form action="https://formspree.io/f/mvzbvgnj" method="POST" style="display: flex; flex-direction: column; gap: 15px;">
+            <input type="text" name="name" placeholder="الاسم" required style="padding: 12px; border-radius: 10px; border: 1px solid #333; background: #222; color: white; outline: none;">
+            
+            <input type="email" name="email" placeholder="البريد الإلكتروني (اختياري)" style="padding: 12px; border-radius: 10px; border: 1px solid #333; background: #222; color: white; outline: none;">
+            
+            <textarea name="message" rows="4" placeholder="اكتب رسالتك هنا..." required style="padding: 12px; border-radius: 10px; border: 1px solid #333; background: #222; color: white; outline: none; resize: none;"></textarea>
+            
+            <button type="submit" style="background: #2ecc71; color: white; border: none; padding: 12px; border-radius: 10px; font-weight: bold; cursor: pointer;">إرسال الآن</button>
+        </form>
+    </div>
+</div>
                 </div>
             </div>
         </section>
@@ -385,6 +411,22 @@
         function closeModal() { document.getElementById('infoModal').style.display = 'none'; }
         function copyText(txt) { navigator.clipboard.writeText(txt).then(() => alert("تم النسخ: " + txt)); }
         window.onclick = (e) => { if(e.target.id === 'infoModal') closeModal(); }
-    </script>
+    
+function openMessageModal() {
+    document.getElementById("messageModal").style.display = "flex";
+}
+
+function closeMessageModal() {
+    document.getElementById("messageModal").style.display = "none";
+}
+
+// إغلاق النافذة عند الضغط خارجها
+window.onclick = function(event) {
+    var modal = document.getElementById("messageModal");
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+</script>
 </body>
 </html>
