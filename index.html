@@ -100,23 +100,30 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .ticker-text {
-            display: flex;
-            white-space: nowrap;
-            animation: slide-text 20s linear infinite;
-        }
+.ticker-text {
+    display: flex;
+    white-space: nowrap;
+    width: max-content; 
+    /* نستخدم الأنيميشن هنا */
+    animation: marquee-loop 20s linear infinite; 
+}
 
-        .ticker-text span {
-            padding-left: 50px;
-            font-size: 12px;
-            font-weight: 500;
-        }
+@keyframes marquee-loop {
+    0% {
+        /* يبدأ الشريط من نقطة الصفر */
+        transform: translateX(0);
+    }
+    100% {
+        /* يتحرك بمقدار نصف طوله الإجمالي (لأنه مكرر) */
+        /* بما أننا نتحرك لليمين، نستخدم القيمة الموجبة لليسار */
+        transform: translateX(50%);
+    }
+}
 
-        @keyframes slide-text {
-            0% { transform: translateX(100%); }
-            100% { transform: translateX(-100%); }
-        }
-
+/* لجعل النص يتحرك من اليسار لليمين بشكل صحيح، نعكس الترتيب */
+.ticker-text {
+    flex-direction: row-reverse;
+}
         .ticker-box:hover .ticker-text { animation-play-state: paused; }
         /* ---------------------------------- */
 
@@ -175,15 +182,17 @@
         <div class="hero-overlay">
             <h2>مبادرة 49 الطلابية الخيرية<br><small>"يداً بيد لنصنع الأثر ونزرع الأمل"</small></h2>
             
-            <div class="ticker-box">
-                <div class="ticker-text">
-                    <span>✨ جديدنا: تدشين توزيع السلال الغذائية-الجزء الثالث في مدينة عدن..</span>
-                    <span>📢 مبادرة 49: نتحرك بخطوات ثابتة ومدروسة ونحتفظ بكل البيانات في أرشيفنا..</span>
-                    <span>💡 قم بالنقر على أيقونات التواصل ولا تتردد في طرح استفساراتك..</span>
-                </div>
-            </div>
-        </div>
+           <div class="ticker-box">
+<div class="ticker-text">
+        <span class="ticker-item"> ✨ أهلا وسهلا بكم، لاتتردد في أخذ جولة استكشافية </span>
+        <span class="ticker-item"> 📢 تدشين توزيع السلال الغذائية-الجزء الثالث في عدن </span>
+        
+        <span class="ticker-item"> ✨ أهلا وسهلا بكم، لاتتردد في أخذ جولة استكشافية </span>
+        <span class="ticker-item"> 📢 تدشين توزيع السلال الغذائية-الجزء الثالث في عدن </span>
     </div>
+</div>
+</div>
+</div>
 
     <nav class="main-nav-grid">
         <div class="tab-btn" onclick="toggleTab('tab-about', this)"><i class="fas fa-info-circle"></i>نبذة</div>
