@@ -11,10 +11,10 @@
     <meta property="og:title" content="مبادرة 49 الطلابية-عدن">
     <meta property="og:description" content="مبادرة شبابية تطوعية تهدف لتعزيز التكافل الاجتماعي ودعم المحتاجين.">
     <meta property="og:image" content="https://initiative-49.vercel.app/images/header.jpg">
-<meta property="og:image:secure_url" content="https://initiative-49.vercel.app/images/header.jpg">
-<meta property="og:image:type" content="image/jpeg">
-<meta property="og:image:width" content="400">
-<meta property="og:image:height" content="400">
+    <meta property="og:image:secure_url" content="https://initiative-49.vercel.app/images/header.jpg">
+    <meta property="og:image:type" content="image/jpeg">
+    <meta property="og:image:width" content="400">
+    <meta property="og:image:height" content="400">
     <meta name="twitter:card" content="summary_large_image">
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -23,165 +23,126 @@
         :root { --main-color: #2c3e50; --accent-color: #2ecc71; --gold: #f1c40f; --blue: #3498db; --red: #e74c3c; }
         body { margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, sans-serif; background-color: #f4f7f6; color: #333; overflow-x: hidden; padding-bottom: 60px; }
 
-        /* الهيدر والبانر */
-       /* الهيدر المحسن بالمحاذاة الصحيحة */
-.main-header { 
-    display: flex; 
-    justify-content: space-between; 
-    align-items: center; 
-    padding: 0 5%; 
-    background: rgba(0,0,0,0.85); 
-    color: white; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
-    z-index: 1000; 
-    backdrop-filter: blur(10px); 
-    height: 65px; 
-}
+        /* الهيدر المحسن */
+        .main-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 5%; 
+            background: rgba(0,0,0,0.85); 
+            color: white; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            z-index: 1000; 
+            backdrop-filter: blur(10px); 
+            height: 65px; 
+        }
 
-/* العنصر الحاوي للصورة والاسم لضمان استقامتهما */
-.header-right {
-    display: flex;
-    align-items: center; /* يوسط الصورة والنص عمودياً تماماً */
-    gap: 10px; /* مسافة ثابتة بين الصورة والنص */
-}
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; display: block; }
+        .brand-name { font-size: 16px; font-weight: bold; line-height: 1; display: flex; align-items: center; }
 
-.header-logo { 
-    width: 40px; 
-    height: 40px; 
-    border-radius: 5px; 
-    object-fit: cover; 
-    display: block; /* يمنع الفراغات العشوائية تحت الصورة */
-}
+        /* البانر والـ Overlay */
+        .hero-banner { 
+            width: 100%; 
+            height: 300px; 
+            background: url('images/0header.jpg') center/cover no-repeat; 
+            margin-top: 65px; 
+            position: relative; 
+            border-bottom: 5px solid var(--accent-color); 
+        }
 
-.brand-name { 
-    font-size: 16px; 
-    font-weight: bold; 
-    line-height: 1; /* يرفع النص قليلاً للأعلى ليناسب منتصف الصورة */
-    display: flex;
-    align-items: center;
-}
+        .hero-overlay { 
+            position: absolute; 
+            bottom: -25px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 85%; 
+            max-width: 500px; 
+            background: white; 
+            padding: 15px; 
+            border-radius: 12px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            text-align: center; 
+            z-index: 10; 
+            border: 1px solid #eee; 
+        }
 
-/* البانر كما هو مع لمسات بسيطة للتناسق */
-.hero-banner { 
-    width: 100%; 
-    height: 300px; 
-    background: url('images/0header.jpg') center/cover no-repeat; 
-    margin-top: 65px; 
-    position: relative; 
-    border-bottom: 5px solid var(--accent-color); 
-}
+        .hero-overlay h2 { margin: 0; color: #222; font-size: 16px; line-height: 1.4; }
 
-.hero-overlay { 
-    position: absolute; 
-    bottom: -25px; 
-    left: 50%; 
-    transform: translateX(-50%); 
-    width: 85%; 
-    max-width: 500px; 
-    background: white; 
-    padding: 15px; 
-    border-radius: 12px; 
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
-    text-align: center; 
-    z-index: 10; 
-    border: 1px solid #eee; 
-}
+        /* --- شريط الإعلانات الجديد المتحرك --- */
+        .ticker-box {
+            background: rgba(0, 0, 0, 0.85);
+            color: white;
+            margin: 10px auto 5px auto;
+            border-radius: 50px;
+            height: 26px;
+            width: 95%;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
 
-.hero-overlay h2 { 
-    margin: 0; 
-    color: #222; 
-    font-size: 16px; 
-    line-height: 1.4; 
-}
+        .ticker-text {
+            display: flex;
+            white-space: nowrap;
+            animation: slide-text 20s linear infinite;
+        }
+
+        .ticker-text span {
+            padding-left: 50px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        @keyframes slide-text {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+
+        .ticker-box:hover .ticker-text { animation-play-state: paused; }
+        /* ---------------------------------- */
 
         /* الأزرار الأربعة */
-        .main-nav-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; width: 95%; max-width: 600px; margin: 50px auto 20px; }
+        .main-nav-grid { 
+            display: grid; 
+            grid-template-columns: repeat(4, 1fr); 
+            gap: 8px; 
+            width: 95%; 
+            max-width: 600px; 
+            margin: 55px auto 20px; /* زيادة الهامش لترك مساحة للـ Overlay */
+        }
+        
         .tab-btn { background: white; border: 1px solid #ddd; padding: 12px 5px; border-radius: 10px; cursor: pointer; text-align: center; transition: 0.3s; font-weight: bold; font-size: 12px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .tab-btn i { font-size: 18px; color: var(--main-color); }
         .tab-btn.active { border-color: var(--accent-color); background: #f0fff4; color: var(--accent-color); transform: translateY(-3px); }
 
-        /* حاوية المحتوى - مخفية افتراضياً */
+        /* بقية التنسيقات (المحتوى، الكروت، الفوتر، المودال) */
         .content-section { display: none; width: 92%; max-width: 800px; margin: 20px auto 80px; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        /* تنسيق الكروت */
         .slider-container { display: flex; overflow-x: auto; gap: 15px; padding: 10px 5px; }
         .card { min-width: 260px; height: 400px; background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; }
         .card-img { width: 100%; height: 50%; object-fit: cover; }
         .card-body { padding: 12px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; text-align: right; }
         .more-btn { background: #f8f9fa; border: 1px solid #eee; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: bold; text-align: center; font-size: 13px; }
-
-        /* هوامش التبرع بالألوان المطلوبة */
         .bank-card { background: white; border-radius: 15px; padding: 15px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); margin-bottom: 15px; }
         .bank-card.kuraimi { border-right: 6px solid #8e44ad; }
         .bank-card.aden { border-right: 6px solid #8b4513; }
         .bank-card.kotaybi { border-right: 6px solid var(--accent-color); }
         .bank-card.transfer { border-right: 6px solid var(--blue); }
-        
         .account-row { display: flex; justify-content: space-between; align-items: center; background: #f9f9f9; padding: 8px 12px; border-radius: 8px; margin-bottom: 6px; }
         .copy-btn { background: #fff; border: 1px solid #ddd; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 11px; }
-
-        /* الفوتر الثابت بالأسفل */
         .fixed-footer { background: #111; color: #999; text-align: center; padding: 15px; font-size: 11px; position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; border-top: 1px solid #222; direction: ltr; }
         .fixed-footer b { color: #fff; }
-
-        /* المودال */
-        /* النافذة المنبثقة (المودال) - نسخة مصححة للهاتف */
-.modal { 
-    display: none; 
-    position: fixed; 
-    top: 0; 
-    left: 0; 
-    width: 100%; 
-    height: 100%; 
-    background: rgba(0,0,0,0.9); 
-    z-index: 3000; 
-    /* لضمان التوسط في كل أنواع الشاشات */
-    display: none; /* سيتم تغييره لـ flex بواسطة JS */
-    justify-content: center; 
-    align-items: center; 
-    padding: 10px; 
-    box-sizing: border-box;
-}
-
-.modal-content { 
-    background: white; 
-    width: 95%; /* لترك مسافة بسيطة جداً على الجوانب في الهاتف */
-    max-width: 500px; 
-    border-radius: 15px; 
-    padding: 20px; 
-    position: relative; 
-    max-height: 85vh; 
-    overflow-y: auto; 
-    text-align: right; 
-    margin: auto; /* يضمن التوسط التلقائي */
-    box-sizing: border-box; /* أهم سطر لمنع الانزياح يميناً */
-    border: none;
-    outline: none;
-}
-
-/* تعديل بسيط لزر الإغلاق لضمان عدم خروجه عن المحتوى */
-.close-btn { 
-    position: absolute; 
-    top: 10px; 
-    left: 15px; 
-    font-size: 28px; 
-    cursor: pointer; 
-    color: #333;
-    z-index: 3001;
-}
-
-.modal-images img { 
-    width: 100%; 
-    border-radius: 10px; 
-    margin-top: 10px; 
-    display: block;
-}
+        .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 3000; justify-content: center; align-items: center; padding: 10px; box-sizing: border-box; }
+        .modal-content { background: white; width: 95%; max-width: 500px; border-radius: 15px; padding: 20px; position: relative; max-height: 85vh; overflow-y: auto; text-align: right; margin: auto; box-sizing: border-box; }
+        .close-btn { position: absolute; top: 10px; left: 15px; font-size: 28px; cursor: pointer; color: #333; z-index: 3001; }
+        .modal-images img { width: 100%; border-radius: 10px; margin-top: 10px; display: block; }
         .video-link { display: block; background: var(--red); color: white !important; text-align: center; padding: 12px; border-radius: 10px; text-decoration: none; font-weight: bold; margin-top: 15px; }
-
         .banner-text { background: white; padding: 20px; border-radius: 15px; text-align: justify; font-size: 14px; line-height: 1.7; }
         .social-icons-large { display: flex; justify-content: center; gap: 20px; margin-top: 20px; }
         .social-icons-large a { font-size: 35px; color: #333; }
@@ -200,16 +161,23 @@
     <div class="hero-banner">
         <div class="hero-overlay">
             <h2>مبادرة 49 الطلابية الخيرية<br><small>"يداً بيد لنصنع الأثر ونزرع الأمل"</small></h2>
+            
+            <div class="ticker-box">
+                <div class="ticker-text">
+                    <span>✨ جديدنا: تدشين توزيع السلال الغذائية-الجزء الثالث في مدينة عدن..</span>
+                    <span>📢 مبادرة 49: نتحرك بخطوات ثابتة ومدروسة ونحتفظ بكل البيانات في أرشيفنا..</span>
+                    <span>💡 قم بالنقر على أيقونات التواصل ولا تتردد في طرح استفساراتك..</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <nav class="main-nav-grid">
         <div class="tab-btn" onclick="toggleTab('tab-about', this)"><i class="fas fa-info-circle"></i>نبذة</div>
-        <div class="tab-btn" onclick="toggleTab('tab-work', this)"><i class="fas fa-star"></i>الإنجازات</div>
+        <div class="tab-btn" onclick="toggleTab('tab-work', this)"><i class="fas fa-star"></i>الإسهامات</div>
         <div class="tab-btn" onclick="toggleTab('tab-contact', this)"><i class="fas fa-phone"></i>تواصل معنا</div>
-        <div class="tab-btn" onclick="toggleTab('tab-donate', this)"><i class="fas fa-heart"></i>تبرع</div>
+        <div class="tab-btn" onclick="toggleTab('tab-donate', this)"><i class="fas fa-heart"></i>تبرع الان</div>
     </nav>
-
     <main>
         <section id="tab-about" class="content-section">
             <div class="banner-text">
