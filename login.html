@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول | مبادرة 49 الطلابية</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { --main-color: #2c3e50; --accent-color: #2ecc71; }
+        body { 
+            margin: 0; 
+            padding: 0; 
+            font-family: 'Segoe UI', Tahoma, sans-serif; 
+            background-color: #f4f7f6; 
+            color: #333; 
+            padding-top: 100px; /* مسافة لضبط موضع الكارت تحت الهيدر */
+            padding-bottom: 80px; 
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* الهيدر الخاص بك (نسخة طبق الأصل) */
+        .main-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 5%; 
+            background: rgba(0,0,0,0.85); 
+            color: white; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            right: 0; 
+            z-index: 1000; 
+            backdrop-filter: blur(10px); 
+            height: 65px; 
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .header-logo { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; }
+        .brand-name { font-size: 16px; font-weight: bold; }
+
+        /* حاوية تسجيل الدخول */
+        .login-container {
+            max-width: 400px;
+            width: 90%;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            border: 1px solid #eee;
+        }
+
+        h2 { text-align: center; color: var(--main-color); margin-bottom: 25px; font-size: 22px; }
+
+        .form-group { margin-bottom: 20px; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #555; }
+        input { 
+            width: 100%; 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #ddd; 
+            box-sizing: border-box; 
+            font-family: inherit;
+            outline: none;
+            transition: 0.3s;
+        }
+        input:focus { border-color: var(--accent-color); box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); }
+
+        .login-btn { 
+            width: 100%; 
+            padding: 12px; 
+            background: var(--accent-color); 
+            color: white; 
+            border: none; 
+            border-radius: 8px; 
+            font-weight: bold; 
+            font-size: 16px; 
+            cursor: pointer; 
+            margin-top: 10px;
+            transition: 0.3s;
+        }
+        .login-btn:hover { background: #27ae60; transform: translateY(-2px); }
+
+        .footer-link { text-align: center; margin-top: 20px; font-size: 14px; color: #777; }
+        .footer-link a { color: var(--accent-color); text-decoration: none; font-weight: bold; }
+
+        /* الفوتر الخاص بك */
+        .fixed-footer { 
+            background: #111; 
+            color: #999; 
+            text-align: center; 
+            padding: 15px; 
+            font-size: 11px; 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            z-index: 1000; 
+            border-top: 1px solid #222; 
+            direction: ltr; 
+        }
+        .fixed-footer b { color: #fff; }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-right">
+            <img src="images/header.jpg" class="header-logo" alt="Logo">
+            <span class="brand-name">مبادرة 49 الطلابية الخيرية</span>
+        </div>
+        <a href="index.html" style="color:white; text-decoration:none; font-size:13px; background:var(--accent-color); padding:5px 15px; border-radius:5px; font-weight:bold;">الرئيسية</a>
+    </header>
+
+    <div class="login-container">
+        <h2>تسجيل الدخول</h2>
+        <form id="loginForm">
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="email" placeholder="example@mail.com" required>
+            </div>
+            <div class="form-group">
+                <label>كلمة المرور</label>
+                <input type="password" id="password" placeholder="********" required>
+            </div>
+            <button type="submit" class="login-btn" id="loginBtn">دخول</button>
+        </form>
+        <div class="footer-link">
+            ليس لديك حساب؟ <a href="join.html">انضم إلينا الآن</a>
+        </div>
+    </div>
+
+     <footer class="fixed-footer">
+       © مبادرة 49 الطلابية | Designed by: <b>Prestige_Malook</b>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
+
+    <script>
+        // إعدادات Firebase الخاصة بك
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3btmEkD5zyp2fChyqFhUqXZInRXf2-iM",
+            authDomain: "initiative49-3bc4a.firebaseapp.com",
+            projectId: "initiative49-3bc4a",
+            storageBucket: "initiative49-3bc4a.firebasestorage.app",
+            messagingSenderId: "1061119423407",
+            appId: "1:1061119423407:web:e00525a7c94ea6c7f1b55a",
+            measurementId: "G-RQ76WES1PC"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('loginBtn');
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            btn.innerText = "جاري التحقق...";
+            btn.disabled = true;
+
+            try {
+                await auth.signInWithEmailAndPassword(email, password);
+                
+                // التوجيه بناءً على نوع المستخدم
+                if(email === "initiative49@gmail.com") {
+                    window.location.href = "admin.html";
+                } else {
+                    window.location.href = "profile.html";
+                }
+            } catch (error) {
+                alert("خطأ: تأكد من صحة البريد الإلكتروني أو كلمة المرور");
+                btn.innerText = "دخول";
+                btn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
