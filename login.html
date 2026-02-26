@@ -2,45 +2,48 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>تسجيل الدخول | مبادرة 49 الطلابية</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --main-color: #2c3e50; --accent-color: #2ecc71; }
-        body { 
+        
+        /* ضبط الهيكل لمنع الفراغات الجانبية */
+        html, body { 
             margin: 0; 
             padding: 0; 
+            width: 100%; 
+            overflow-x: hidden; 
             font-family: 'Segoe UI', Tahoma, sans-serif; 
             background-color: #f4f7f6; 
-            color: #333; 
-            padding-top: 100px; /* مسافة لضبط موضع الكارت تحت الهيدر */
-            padding-bottom: 80px; 
             display: flex;
             flex-direction: column;
             min-height: 100vh;
             box-sizing: border-box;
         }
 
-        /* الهيدر الخاص بك (نسخة طبق الأصل) */
+        body { padding-top: 100px; padding-bottom: 80px; }
+
+        /* الهيدر المحكم */
         .main-header { 
             display: flex; 
             justify-content: space-between; 
             align-items: center; 
             padding: 0 5%; 
-            background: rgba(0,0,0,0.85); 
+            background: rgba(0,0,0,0.95); 
             color: white; 
             position: fixed; 
             top: 0; 
             left: 0; 
-            right: 0; 
+            width: 100%; 
             z-index: 1000; 
-            backdrop-filter: blur(10px); 
             height: 65px; 
             border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-sizing: border-box;
         }
         .header-right { display: flex; align-items: center; gap: 10px; }
         .header-logo { width: 40px; height: 40px; border-radius: 5px; object-fit: cover; }
-        .brand-name { font-size: 16px; font-weight: bold; }
+        .brand-name { font-size: 14px; font-weight: bold; }
 
         /* حاوية تسجيل الدخول */
         .login-container {
@@ -52,11 +55,12 @@
             border-radius: 15px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.05);
             border: 1px solid #eee;
+            box-sizing: border-box;
         }
 
         h2 { text-align: center; color: var(--main-color); margin-bottom: 25px; font-size: 22px; }
 
-        .form-group { margin-bottom: 20px; }
+        .form-group { margin-bottom: 20px; text-align: right; }
         label { display: block; margin-bottom: 8px; font-weight: bold; font-size: 14px; color: #555; }
         input { 
             width: 100%; 
@@ -67,6 +71,7 @@
             font-family: inherit;
             outline: none;
             transition: 0.3s;
+            text-align: right;
         }
         input:focus { border-color: var(--accent-color); box-shadow: 0 0 5px rgba(46, 204, 113, 0.2); }
 
@@ -83,12 +88,11 @@
             margin-top: 10px;
             transition: 0.3s;
         }
-        .login-btn:hover { background: #27ae60; transform: translateY(-2px); }
 
         .footer-link { text-align: center; margin-top: 20px; font-size: 14px; color: #777; }
         .footer-link a { color: var(--accent-color); text-decoration: none; font-weight: bold; }
 
-        /* الفوتر الخاص بك */
+        /* الفوتر المحكم */
         .fixed-footer { 
             background: #111; 
             color: #999; 
@@ -98,12 +102,11 @@
             position: fixed; 
             bottom: 0; 
             left: 0; 
-            right: 0; 
+            width: 100%; 
             z-index: 1000; 
-            border-top: 1px solid #222; 
             direction: ltr; 
+            box-sizing: border-box;
         }
-        .fixed-footer b { color: #fff; }
     </style>
 </head>
 <body>
@@ -111,17 +114,17 @@
     <header class="main-header">
         <div class="header-right">
             <img src="images/header.jpg" class="header-logo" alt="Logo">
-            <span class="brand-name">مبادرة 49 الطلابية الخيرية</span>
+            <span class="brand-name">مبادرة 49 الطلابية</span>
         </div>
-        <a href="index.html" style="color:white; text-decoration:none; font-size:13px; background:var(--accent-color); padding:5px 15px; border-radius:5px; font-weight:bold;">الرئيسية</a>
+        <a href="index.html" style="color:white; text-decoration:none; font-size:12px; background:var(--accent-color); padding:5px 12px; border-radius:5px; font-weight:bold;">الرئيسية</a>
     </header>
 
     <div class="login-container">
         <h2>تسجيل الدخول</h2>
         <form id="loginForm">
             <div class="form-group">
-                <label>البريد الإلكتروني</label>
-                <input type="email" id="email" placeholder="example@mail.com" required>
+                <label id="userLabel">اسم المستخدم أو الإيميل</label>
+                <input type="text" id="userInput" placeholder="اكتب اسم المستخدم" required>
             </div>
             <div class="form-group">
                 <label>كلمة المرور</label>
@@ -134,23 +137,19 @@
         </div>
     </div>
 
-     <footer class="fixed-footer">
-       © مبادرة 49 الطلابية | Designed by: <b>Prestige_Malook</b>
-    </footer>
+    <footer class="fixed-footer">© مبادرة 49 الطلابية | Designed by: Prestige_Malook</footer>
 
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.17.1/firebase-auth-compat.js"></script>
 
     <script>
-        // إعدادات Firebase الخاصة بك
         const firebaseConfig = {
             apiKey: "AIzaSyB3btmEkD5zyp2fChyqFhUqXZInRXf2-iM",
             authDomain: "initiative49-3bc4a.firebaseapp.com",
             projectId: "initiative49-3bc4a",
             storageBucket: "initiative49-3bc4a.firebasestorage.app",
             messagingSenderId: "1061119423407",
-            appId: "1:1061119423407:web:e00525a7c94ea6c7f1b55a",
-            measurementId: "G-RQ76WES1PC"
+            appId: "1:1061119423407:web:e00525a7c94ea6c7f1b55a"
         };
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
@@ -158,23 +157,30 @@
         document.getElementById('loginForm').addEventListener('submit', async (e) => {
             e.preventDefault();
             const btn = document.getElementById('loginBtn');
-            const email = document.getElementById('email').value;
+            const userInput = document.getElementById('userInput').value.trim().toLowerCase();
             const password = document.getElementById('password').value;
 
             btn.innerText = "جاري التحقق...";
             btn.disabled = true;
 
+            let finalEmail = userInput;
+
+            // ذكاء اصطناعي بسيط: إذا لم يكن المدخل إيميل حقيقي، حوله لإيميل وهمي
+            if (!userInput.includes("@")) {
+                finalEmail = userInput + "@mubadara49.com";
+            }
+
             try {
-                await auth.signInWithEmailAndPassword(email, password);
+                await auth.signInWithEmailAndPassword(finalEmail, password);
                 
-                // التوجيه بناءً على نوع المستخدم
-                if(email === "initiative49@gmail.com") {
+                // توجيه المدير أو المتطوع
+                if(finalEmail === "initiative49@gmail.com") {
                     window.location.href = "malook566.html";
                 } else {
                     window.location.href = "profile.html";
                 }
             } catch (error) {
-                alert("خطأ: تأكد من صحة البريد الإلكتروني أو كلمة المرور");
+                alert("خطأ: تأكد من اسم المستخدم أو كلمة المرور");
                 btn.innerText = "دخول";
                 btn.disabled = false;
             }

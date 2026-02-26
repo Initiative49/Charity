@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>انضم للعائلة | مبادرة 49</title>
     
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
@@ -11,13 +11,50 @@
 
     <style>
         :root { --main-color: #000; --accent-color: #2ecc71; }
-        body { margin: 0; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; padding: 80px 0 100px; }
         
-     /* الهيدر الخاص بك */
-        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 0 4%; background: #000; color: white; position: fixed; top: 0; left: 0; right: 0; height: 60px; z-index: 1000; }
+        /* ضبط الهيكل لمنع الفراغات الجانبية */
+        html, body { 
+            margin: 0; 
+            padding: 0; 
+            width: 100%; 
+            overflow-x: hidden; /* يمنع الفراغ الأبيض يميناً */
+            font-family: 'Segoe UI', sans-serif; 
+            background: #f4f7f6; 
+        }
+
+        body { padding: 80px 0 100px; }
+        
+        /* الهيدر المحكم */
+        .main-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 0 4%; 
+            background: #000; 
+            color: white; 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 60px; 
+            z-index: 1000; 
+            box-sizing: border-box; 
+        }
+
         .header-logo { width: 35px; height: 35px; border-radius: 5px; }
 
-        .join-container { max-width: 500px; width: 92%; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        /* حاوية الاستمارة */
+        .join-container { 
+            max-width: 500px; 
+            width: 90%; 
+            margin: auto; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            box-sizing: border-box;
+        }
+
         .form-group { margin-bottom: 15px; text-align: right; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #333; }
         .form-control { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 14px; }
@@ -28,9 +65,21 @@
         .submit-btn { width: 100%; padding: 14px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
         .submit-btn:disabled { background: #95a5a6; }
 
-
-        /* الفوتر الخاص بك */
-        .fixed-footer { background: #111; color: #999; text-align: center; padding: 15px; font-size: 11px; position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000; direction: ltr; }
+        /* الفوتر المحكم */
+        .fixed-footer { 
+            background: #111; 
+            color: #999; 
+            text-align: center; 
+            padding: 15px; 
+            font-size: 11px; 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            width: 100%; 
+            z-index: 1000; 
+            direction: ltr; 
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -38,9 +87,9 @@
     <header class="main-header">
         <div style="display:flex; align-items:center; gap:8px;">
             <img src="images/header.jpg" class="header-logo">
-            <span style="font-weight:bold; font-size:14px;">مبادرة 49 الطلابية الخيرية</span>
+            <span style="font-weight:bold; font-size:14px;">مبادرة 49 الطلابية</span>
         </div>
-        <a href="index.html" style="color:white; text-decoration:none; font-size:12px; border:1px solid #444; background:var(--accent-color); padding:5px 10px; border-radius:5px;">الرئيسية</a>
+        <a href="index.html" style="color:white; text-decoration:none; font-size:11px; background:var(--accent-color); padding:5px 10px; border-radius:5px;">الرئيسية</a>
     </header>
 
     <div class="join-container">
@@ -72,8 +121,7 @@
             </div>
 
             <div class="form-row">
-                <div class="form-group">
-                    <label>المستوى الدراسي</label>
+                <div class="form-group"><label>المستوى الدراسي</label>
                     <select id="eduLevel" class="form-control" onchange="toggleEduYear(this.value)">
                         <option value="جامعي">جامعي</option>
                         <option value="ثانوي">ثانوي</option>
@@ -81,14 +129,15 @@
                         <option value="لست طالباً">لست طالباً</option>
                     </select>
                 </div>
-                <div class="form-group" id="yearGroup">
-                    <label>السنة الدراسية</label>
-                    <input type="text" id="eduYear" class="form-control" placeholder="مثلاً: أولى">
-                </div>
+                <div class="form-group" id="yearGroup"><label>السنة الدراسية</label><input type="text" id="eduYear" class="form-control" placeholder="مثلاً: أولى"></div>
             </div>
 
-            <div class="form-group"><label>البريد الإلكتروني</label><input type="email" id="email" class="form-control" required></div>
-            <div class="form-group"><label>كلمة السر</label><input type="password" id="password" class="form-control" required></div>
+            <div class="form-group">
+                <label>اسم المستخدم (بالإنجليزي - بدون فواصل)</label>
+                <input type="text" id="username" class="form-control" placeholder="مثال: ahmed99" required>
+            </div>
+            
+            <div class="form-group"><label>كلمة السر</label><input type="password" id="password" class="form-control" minlength="6" required></div>
 
             <button type="submit" id="submitBtn" class="submit-btn">انضم الآن</button>
             
@@ -98,12 +147,9 @@
         </form>
     </div>
 
-   <footer class="fixed-footer">
-       © مبادرة 49 الطلابية | Designed by: <b>Prestige_Malook</b>
-    </footer>
+    <footer class="fixed-footer">© مبادرة 49 الطلابية | Designed by: Prestige_Malook</footer>
 
     <script>
-        // تكوين Firebase الخاص بك
         const firebaseConfig = {
             apiKey: "AIzaSyB3btmEkD5zyp2fChyqFhUqXZInRXf2-iM",
             authDomain: "initiative49-3bc4a.firebaseapp.com",
@@ -116,44 +162,37 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        // وظيفة إخفاء السنة الدراسية
         function toggleEduYear(val) {
-            const yearInput = document.getElementById('yearGroup');
+            const yearGroup = document.getElementById('yearGroup');
+            const yearInput = document.getElementById('eduYear');
             if (val === "لست طالباً") {
-                yearInput.style.visibility = "hidden";
-                document.getElementById('eduYear').value = "---";
+                yearGroup.style.display = "none";
+                yearInput.value = "---";
             } else {
-                yearInput.style.visibility = "visible";
+                yearGroup.style.display = "block";
             }
         }
 
-        // معالجة إرسال الفورم
         document.getElementById('joinForm').onsubmit = async (e) => {
             e.preventDefault();
             const btn = document.getElementById('submitBtn');
-            btn.innerText = "جاري الانضمام...";
+            btn.innerText = "جاري الحفظ...";
             btn.disabled = true;
 
-            const volType = document.getElementById('volType').value;
-            let finalRank = "";
+            const username = document.getElementById('username').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const fakeEmail = username + "@mubadara49.com"; // تحويل خلف الكواليس
 
-            // تطبيق منطق الرتبة التلقائية (برونزي)
-            if (volType === "متطوع عام") {
-                finalRank = "عضو برونزي";
-            } else {
-                finalRank = volType + " برونزي";
-            }
+            const volType = document.getElementById('volType').value;
+            let finalRank = (volType === "متطوع عام") ? "عضو برونزي" : volType + " برونزي";
 
             try {
-                const email = document.getElementById('email').value;
-                const password = document.getElementById('password').value;
-                
-                // إنشاء الحساب في Authentication
-                const cred = await auth.createUserWithEmailAndPassword(email, password);
+                // إنشاء الحساب باستخدام الإيميل الوهمي
+                const cred = await auth.createUserWithEmailAndPassword(fakeEmail, password);
 
-                // حفظ البيانات في Firestore
                 await db.collection("volunteers").doc(cred.user.uid).set({
                     fullName: document.getElementById('fullName').value,
+                    username: username, // حفظ اسم المستخدم للذكرى
                     gender: document.getElementById('gender').value,
                     age: document.getElementById('age').value,
                     province: document.getElementById('province').value,
@@ -162,14 +201,14 @@
                     volType: volType,
                     eduLevel: document.getElementById('eduLevel').value,
                     eduYear: document.getElementById('eduYear').value || "---",
-                    rank: finalRank, // تعيين الرتبة البرونزية تلقائياً
+                    rank: finalRank,
                     status: "نشط",
                     joinDate: new Date().toLocaleDateString()
                 });
 
                 window.location.href = "profile.html";
             } catch(err) { 
-                alert("تعذر الانضمام: " + err.message); 
+                alert("تعذر الانضمام: اسم المستخدم قد يكون مستخدماً أو كلمة السر ضعيفة"); 
                 btn.innerText = "انضم الآن";
                 btn.disabled = false;
             }
