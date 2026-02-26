@@ -153,25 +153,65 @@
                 });
             } else { window.location.href = "login.html"; }
         });
+function updateRankStyle(rank) {
+    const banner = document.getElementById('rankBanner');
+    const thankText = document.getElementById('thankText');
+    banner.innerText = rank;
 
-        function updateRankStyle(rank) {
-            const banner = document.getElementById('rankBanner');
-            const thankText = document.getElementById('thankText');
-            banner.innerText = rank;
-            let bg = "linear-gradient(45deg, #7f8c8d, #95a5a6)";
-            let message = "شكراً لانضمامك إلينا، جهودك هي حجر الأساس في مبادرة 49.";
+    let bg = "linear-gradient(45deg, #7f8c8d, #95a5a6)"; // اللون الافتراضي (رمادي)
+    let message = "شكراً لانضمامك إلينا، جهودك هي حجر الأساس في مبادرة 49.";
 
-            if (rank.includes("برونزي")) bg = "linear-gradient(45deg, #cd7f32, #8b4513)";
-            else if (rank.includes("فضي")) bg = "linear-gradient(45deg, #bdc3c7, #7f8c8d)";
-            else if (rank.includes("ذهبي")) { bg = "linear-gradient(45deg, #f1c40f, #d4af37)"; message = "أنت مشعل ضياء في عائلتنا! الرتبة الذهبية تليق بجهودك الاستثنائية."; }
-            else if (rank.includes("ماسي")) bg = "linear-gradient(45deg, #b9f2ff, #2980b9)";
-            else if (rank.includes("أسطوري")) bg = "linear-gradient(45deg, #6a11cb, #2575fc)";
-            else if (rank.includes("رئيس") || rank.includes("مدير")) bg = "linear-gradient(45deg, #000, #434343)";
-            else if (rank.includes("مشتريات")) bg = "linear-gradient(45deg, #66a6ff, #2c5364)";
+    // نظام الألوان والرسائل بناءً على الرتب والمناصب
+    if (rank.includes("برونزي")) {
+        bg = "linear-gradient(45deg, #cd7f32, #8b4513)";
+        message = "بداية مباركة يا بطل! رتبتك البرونزية هي أول خطوة في طريق العطاء.";
+    } 
+    else if (rank.includes("فضي")) {
+        bg = "linear-gradient(45deg, #bdc3c7, #7f8c8d)";
+        message = "رائع! ترقيتك للرتبة الفضية تعكس تفانيك المستمر في المبادرة.";
+    }
+    else if (rank.includes("ذهبي")) {
+        bg = "linear-gradient(45deg, #f1c40f, #d4af37)";
+        message = "أنت مشعل ضياء في عائلتنا! الرتبة الذهبية تليق بجهودك الاستثنائية.";
+    }
+    else if (rank.includes("بلاتنيوم")) {
+        bg = "linear-gradient(45deg, #e5e4e2, #b4b4b4)";
+        message = "مستوى البلاتنيوم! حضورك القوي وتأثيرك ملموس في كل زاوية.";
+    }
+    else if (rank.includes("ماسي")) {
+        bg = "linear-gradient(45deg, #b9f2ff, #2980b9)";
+        message = "أنت جوهرة المبادرة! الرتبة الماسية تقدير لإخلاصك الذي لا يقدر بثمن.";
+    }
+    else if (rank.includes("أسطوري")) {
+        bg = "linear-gradient(45deg, #6a11cb, #2575fc)";
+        message = "الأسطورة! لقد تجاوزت كل التوقعات، شكراً لكونك قدوة لنا جميعاً.";
+    }
+    else if (rank.includes("مشتريات")) {
+        bg = "linear-gradient(45deg, #66a6ff, #2c5364)";
+        message = "شكرا لك على تفانيك في اختيار الأنسب للمبادرة وتوفير كل ما يلزم، أنت يد المبادرة.";
+    }
+    // المناصب الإدارية
+    else if (rank.includes("رئيس") || rank.includes("مدير")) {
+        bg = "linear-gradient(45deg, #000000, #434343)";
+        message = "قيادتك الحكيمة هي ما يدفعنا للأمام. شكراً لتحملك المسؤولية.";
+    }
+    else if (rank.includes("مصمم") || rank.includes("مصور")) {
+        bg = "linear-gradient(45deg, #ff00cc, #3333ff)";
+        message = "لمساتك الإبداعية تمنح المبادرة روحاً وجمالاً. شكراً لإبداعك.";
+    }
+    else if (rank.includes("مالي") || rank.includes("محصل")) {
+        bg = "linear-gradient(45deg, #11998e, #38ef7d)";
+        message = "شكراً لأمانتك ودقتك في إدارة الموارد، أنت صمام الأمان المالي.";
+    }
+    else if (rank.includes("علاقات") || rank.includes("مشاريع")) {
+        bg = "linear-gradient(45deg, #f093fb, #f5576c)";
+        message = "شكراً لجهودك في بناء الجسور وتنظيم المشاريع باحترافية.";
+    }
 
-            banner.style.background = bg;
-            thankText.innerText = message;
-        }
+    // تطبيق التغييرات على الصفحة
+    banner.style.background = bg;
+    thankText.innerText = message;
+}
 
         function handleLogout() {
             auth.signOut().then(() => { window.location.href = "login.html"; });
