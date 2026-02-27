@@ -190,6 +190,10 @@ function updateRankStyle(rank) {
         bg = "linear-gradient(45deg, #66a6ff, #2c5364)";
         message = "شكرا لك على تفانيك في اختيار الأنسب للمبادرة وتوفير كل ما يلزم، أنت يد المبادرة.";
     }
+else if (rank.includes("المواقع")) {
+        bg = "linear-gradient(45deg, #4169E1, #0000FF)";
+        message = "ممتنون لإخلاصك في إدارة مجتمعاتنا الرقمية، وشغفك الذي جعل من محتوى مبادرة 49 منارة للعطاء..";
+    }
     // المناصب الإدارية
     else if (rank.includes("رئيس") || rank.includes("مدير")) {
         bg = "linear-gradient(45deg, #000000, #434343)";
