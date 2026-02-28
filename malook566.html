@@ -14,44 +14,32 @@
 
     <style>
         :root { --main-color: #2c3e50; --accent-color: #2ecc71; --danger-color: #e74c3c; --edit-color: #3498db; }
-        
         html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
         body { padding-bottom: 100px; }
-        
         .main-header { display: flex; justify-content: space-between; align-items: center; padding: 0 4%; background: #000; color: white; height: 60px; position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .header-logo { width: 35px; height: 35px; border-radius: 5px; }
-
         .container { padding: 80px 15px 20px; width: 100%; max-width: 1200px; margin: auto; box-sizing: border-box; }
-
         .top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .stat-item { background: white; padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-right: 5px solid var(--accent-color); }
-        
         .excel-btn { background: #27ae60; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
-        .excel-btn:hover { background: #1e8449; }
-
-        /* الفرز الذكي المعدل */
         .filter-container { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; padding-bottom: 5px; }
         .pill { padding: 6px 14px; background: #ddd; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: bold; color: #555; transition: 0.3s; white-space: nowrap; }
         .pill.active { background: var(--accent-color); color: white; }
-        .pill.gender-pill { background: #34495e; color: white; } /* تمييز أزرار الجنس */
-
+        .pill.gender-pill { background: #34495e; color: white; }
         .table-wrapper { background: white; border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+        table { width: 100%; border-collapse: collapse; min-width: 1200px; }
         th, td { padding: 12px 10px; text-align: right; border-bottom: 1px solid #eee; font-size: 12px; }
         th { background: #f8f9fa; color: #555; font-weight: bold; }
-        
         .rank-tag { padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; color: white; }
         .action-btns { display: flex; gap: 5px; }
         .btn-edit { background: var(--edit-color); color: white; border: none; padding: 6px; border-radius: 4px; cursor: pointer; }
         .btn-delete { background: var(--danger-color); color: white; border: none; padding: 6px; border-radius: 4px; cursor: pointer; }
-
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: white; width: 92%; max-width: 550px; padding: 20px; border-radius: 15px; max-height: 85vh; overflow-y: auto; }
         .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .full { grid-column: span 2; }
         .form-group label { display: block; font-size: 11px; font-weight: bold; color: #777; margin-bottom: 4px; }
         .form-group input, .form-group select { width: 100%; padding: 9px; border: 1px solid #ddd; border-radius: 6px; font-size: 13px; }
-
         .fixed-footer { background: #111; color: #999; text-align: center; padding: 15px; font-size: 11px; position: fixed; bottom: 0; left: 0; width: 100%; direction: ltr; box-sizing: border-box; }
     </style>
 </head>
@@ -60,7 +48,7 @@
     <header class="main-header">
         <div style="display:flex; align-items:center; gap:8px;">
             <img src="images/header.jpg" class="header-logo">
-            <span style="font-weight:bold; font-size:14px;">الإدارة العليا</span>
+            <span style="font-weight:bold; font-size:14px;">الإدارة العليا - مبادرة 49</span>
         </div>
         <button onclick="handleLogout()" style="background:none; border:1px solid #444; color:white; padding:5px 12px; border-radius:6px; font-size:11px; cursor:pointer;">خروج</button>
     </header>
@@ -74,18 +62,18 @@
                     <div id="vCount" style="font-size:18px; font-weight:bold;">0</div>
                 </div>
             </div>
-            <button class="excel-btn" onclick="exportToExcel()">
-                <i class="fas fa-file-excel"></i> تحميل نسخة Excel
-            </button>
+            <button class="excel-btn" onclick="exportToExcel()">تحميل نسخة Excel</button>
         </div>
 
-        <div class="filter-container" id="filterContainer">
+        <div class="filter-container">
             <div class="pill active" onclick="filterData('الكل', this)">الكل</div>
             <div class="pill" onclick="filterData('ميداني', this)">ميداني</div>
             <div class="pill" onclick="filterData('إلكتروني', this)">إلكتروني</div>
-            <div class="pill" onclick="filterData('داعم', this)">الداعمين</div> <div class="pill" onclick="filterData('ذهبي', this)">الرتب الذهبية</div>
+            <div class="pill" onclick="filterData('داعم', this)">الداعمين</div>
+            <div class="pill" onclick="filterData('ذهبي', this)">الرتب الذهبية</div>
             <div class="pill" onclick="filterData('رئيس', this)">القيادة</div>
-            <div class="pill gender-pill" onclick="filterData('ذكر', this)">♂ ذكور</div> <div class="pill gender-pill" onclick="filterData('أنثى', this)">♀ إناث</div> <div class="pill" onclick="filterData('مرفوض', this)">المرفوضين</div>
+            <div class="pill gender-pill" onclick="filterData('ذكر', this)">♂ ذكور</div>
+            <div class="pill gender-pill" onclick="filterData('أنثى', this)">♀ إناث</div>
         </div>
 
         <div class="table-wrapper">
@@ -93,9 +81,11 @@
                 <thead>
                     <tr>
                         <th>الاسم الرباعي</th>
-                        <th>التخصص</th> <th>الجنس/العمر</th>
+                        <th>الهاتف</th> <th>التخصص</th>
+                        <th>المستوى</th>
+                        <th>السنة</th>
+                        <th>الجنس/العمر</th>
                         <th>الموقع</th>
-                        <th>الهاتف</th>
                         <th>نوع التطوع</th>
                         <th>الرتبة</th>
                         <th>الحالة</th>
@@ -109,31 +99,26 @@
 
     <div id="editModal" class="modal">
         <div class="modal-content">
-            <h4 style="margin:0 0 15px 0; text-align:center;">تعديل بيانات العضو</h4>
+            <h4 style="text-align:center;">تعديل بيانات العضو</h4>
             <input type="hidden" id="editId">
             <div class="modal-grid">
-                <div class="form-group full"><label>الاسم الرباعي</label><input type="text" id="editName"></div>
-                <div class="form-group full"><label>التخصص</label><input type="text" id="editMajor"></div> <div class="form-group"><label>اسم المستخدم</label><input type="text" id="editUser"></div>
+                <div class="form-group full"><label>الاسم</label><input type="text" id="editName"></div>
+                <div class="form-group full"><label>التخصص</label><input type="text" id="editMajor"></div>
+                <div class="form-group"><label>المستوى</label><input type="text" id="editEdu"></div>
+                <div class="form-group"><label>السنة</label><input type="text" id="editYear"></div>
                 <div class="form-group"><label>رقم الهاتف</label><input type="text" id="editPhone"></div>
+                <div class="form-group"><label>الجنس</label><select id="editGender"><option value="ذكر">ذكر</option><option value="أنثى">أنثى</option></select></div>
                 <div class="form-group"><label>المحافظة</label><input type="text" id="editProv"></div>
                 <div class="form-group"><label>المديرية</label><input type="text" id="editDist"></div>
-                <div class="form-group"><label>العمر</label><input type="number" id="editAge"></div>
-                <div class="form-group full"><label>المنصب (الرتبة)</label><input type="text" id="editRank" style="border:2px solid var(--edit-color)"></div>
-                <div class="form-group full">
-                    <label>الحالة</label>
-                    <select id="editStatus">
-                        <option value="نشط">نشط</option>
-                        <option value="مرفوض">مرفوض</option>
-                        <option value="محظور">محظور</option>
-                    </select>
-                </div>
+                <div class="form-group full"><label>الرتبة</label><input type="text" id="editRank"></div>
+                <div class="form-group full"><label>الحالة</label><select id="editStatus"><option value="نشط">نشط</option><option value="مرفوض">مرفوض</option></select></div>
             </div>
-            <button class="excel-btn" style="width:100%; margin-top:15px; padding:12px;" onclick="saveData()">حفظ التعديلات</button>
+            <button class="excel-btn" style="width:100%; margin-top:15px; padding:12px;" onclick="saveData()">حفظ</button>
             <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#999; margin-top:10px; cursor:pointer;">إلغاء</button>
         </div>
     </div>
 
-    <footer class="fixed-footer">© مبادرة 49 الطلابية | Designed by: Prestige_Malook</footer>
+   <footer class="fixed-footer">© مبادرة 49 الطلابية | Designed by: Prestige_Malook</footer>
 
     <script>
         const firebaseConfig = {
@@ -147,15 +132,11 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         const auth = firebase.auth();
-
         let allVolunteers = [];
 
         auth.onAuthStateChanged(user => {
-            if (user && user.email === "initiative49@gmail.com") {
-                loadData();
-            } else {
-                window.location.href = "login.html";
-            }
+            if (user && user.email === "initiative49@gmail.com") { loadData(); } 
+            else { window.location.href = "login.html"; }
         });
 
         function loadData() {
@@ -170,22 +151,22 @@
             const tbody = document.getElementById('vTableBody');
             tbody.innerHTML = '';
             document.getElementById('vCount').innerText = data.length;
-
             data.forEach(d => {
                 let rColor = "#95a5a6";
                 const r = (d.rank || "").toLowerCase();
                 if(r.includes("ذهبي")) rColor = "#f1c40f";
                 else if(r.includes("برونزي")) rColor = "#cd7f32";
-                else if(r.includes("فضي")) rColor = "#bdc3c7";
-                else if(r.includes("رئيس") || r.includes("إداري")) rColor = "#000";
+                else if(r.includes("رئيس") || r.includes("مدير")) rColor = "#000";
 
                 tbody.innerHTML += `
                     <tr>
                         <td><b>${d.fullName}</b></td>
+                        <td style="color:#27ae60; font-weight:bold;">${d.phone || '---'}</td>
                         <td style="color:#2980b9;">${d.major || '---'}</td>
+                        <td>${d.eduLevel || '---'}</td>
+                        <td>${d.eduYear || '---'}</td>
                         <td>${d.gender} / ${d.age}</td>
                         <td>${d.province}</td>
-                        <td>${d.phone}</td>
                         <td>${d.volType}</td>
                         <td><span class="rank-tag" style="background:${rColor}">${d.rank}</span></td>
                         <td style="color:${d.status === 'نشط' ? '#2ecc71' : '#e74c3c'}; font-weight:bold;">${d.status}</td>
@@ -200,21 +181,14 @@
             });
         }
 
-        // دالة الفلترة المطورة لتشمل الجنس والداعمين
         function filterData(type, el) {
             document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
             el.classList.add('active');
-
-            if(type === 'الكل') {
-                renderTable(allVolunteers);
-                return;
-            }
-
+            if(type === 'الكل') { renderTable(allVolunteers); return; }
             const filtered = allVolunteers.filter(v => {
-                const searchArea = (v.volType + v.rank + v.status + v.gender).toLowerCase();
-                return searchArea.includes(type.toLowerCase());
+                if (type === 'ذكر' || type === 'أنثى') return v.gender === type;
+                return (v.volType || "").includes(type) || (v.rank || "").includes(type) || (v.status || "").includes(type);
             });
-            
             renderTable(filtered);
         }
 
@@ -222,12 +196,13 @@
             const d = allVolunteers.find(v => v.id === id);
             document.getElementById('editId').value = id;
             document.getElementById('editName').value = d.fullName;
-            document.getElementById('editMajor').value = d.major || ""; // جلب التخصص للمودال
-            document.getElementById('editUser').value = d.username || "";
+            document.getElementById('editMajor').value = d.major || "---";
+            document.getElementById('editEdu').value = d.eduLevel || "";
+            document.getElementById('editYear').value = d.eduYear || "";
             document.getElementById('editPhone').value = d.phone;
+            document.getElementById('editGender').value = d.gender;
             document.getElementById('editProv').value = d.province;
             document.getElementById('editDist').value = d.district;
-            document.getElementById('editAge').value = d.age;
             document.getElementById('editRank').value = d.rank;
             document.getElementById('editStatus').value = d.status;
             document.getElementById('editModal').style.display = 'flex';
@@ -237,28 +212,28 @@
             const id = document.getElementById('editId').value;
             await db.collection("volunteers").doc(id).update({
                 fullName: document.getElementById('editName').value,
-                major: document.getElementById('editMajor').value, // حفظ التخصص
-                username: document.getElementById('editUser').value,
+                major: document.getElementById('editMajor').value,
+                eduLevel: document.getElementById('editEdu').value,
+                eduYear: document.getElementById('editYear').value,
                 phone: document.getElementById('editPhone').value,
+                gender: document.getElementById('editGender').value,
                 province: document.getElementById('editProv').value,
                 district: document.getElementById('editDist').value,
-                age: document.getElementById('editAge').value,
                 rank: document.getElementById('editRank').value,
                 status: document.getElementById('editStatus').value
             });
             closeModal();
-            alert("تم تحديث البيانات بنجاح!");
+            alert("تم التحديث!");
         }
 
+        function closeModal() { document.getElementById('editModal').style.display = 'none'; }
+        function deleteUser(id, name) { if(confirm(`حذف ${name}؟`)) db.collection("volunteers").doc(id).delete(); }
+        function handleLogout() { auth.signOut().then(() => window.location.href = "login.html"); }
         function exportToExcel() {
             const table = document.getElementById("adminTable");
-            const wb = XLSX.utils.table_to_book(table, {sheet: "المتطوعين"});
-            XLSX.writeFile(wb, `مبادرة_49_تحديث_${new Date().toLocaleDateString()}.xlsx`);
+            const wb = XLSX.utils.table_to_book(table);
+            XLSX.writeFile(wb, "مبادرة_49.xlsx");
         }
-
-        function deleteUser(id, name) { if(confirm(`هل أنت متأكد من حذف ${name} نهائياً؟`)) db.collection("volunteers").doc(id).delete(); }
-        function closeModal() { document.getElementById('editModal').style.display = 'none'; }
-        function handleLogout() { auth.signOut().then(() => window.location.href = "login.html"); }
     </script>
 </body>
 </html>
