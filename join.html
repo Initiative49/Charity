@@ -9,22 +9,22 @@
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         :root { --main-color: #000; --accent-color: #2ecc71; }
         
-        /* ضبط الهيكل لمنع الفراغات الجانبية */
         html, body { 
             margin: 0; 
             padding: 0; 
             width: 100%; 
-            overflow-x: hidden; /* يمنع الفراغ الأبيض يميناً */
+            overflow-x: hidden; 
             font-family: 'Segoe UI', sans-serif; 
             background: #f4f7f6; 
         }
 
         body { padding: 80px 0 100px; }
         
-        /* الهيدر المحكم */
         .main-header { 
             display: flex; 
             justify-content: space-between; 
@@ -43,7 +43,6 @@
 
         .header-logo { width: 35px; height: 35px; border-radius: 5px; }
 
-        /* حاوية الاستمارة */
         .join-container { 
             max-width: 500px; 
             width: 90%; 
@@ -55,17 +54,28 @@
             box-sizing: border-box;
         }
 
-        .form-group { margin-bottom: 15px; text-align: right; }
+        .form-group { margin-bottom: 15px; text-align: right; position: relative; }
         .form-group label { display: block; margin-bottom: 5px; font-weight: bold; font-size: 13px; color: #333; }
         .form-control { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; font-family: inherit; font-size: 14px; }
         
-        .form-row { display: flex; gap: 10px; }
+        /* تنسيق أيقونة العين */
+        .password-container { position: relative; }
+        .toggle-password {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #777;
+            z-index: 10;
+        }
+
+        .form-row { display: flex; gap: 10px; margin-bottom: 5px; }
         .form-row .form-group { flex: 1; }
         
         .submit-btn { width: 100%; padding: 14px; background: var(--accent-color); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px; }
         .submit-btn:disabled { background: #95a5a6; }
 
-        /* الفوتر المحكم */
         .fixed-footer { 
             background: #111; 
             color: #999; 
@@ -80,6 +90,11 @@
             direction: ltr; 
             box-sizing: border-box;
         }
+
+        #match-message { font-size: 11px; margin-top: 5px; display: block; }
+        
+        /* إخفاء الحقول الإضافية افتراضياً */
+        #majorGroup { display: block; } 
     </style>
 </head>
 <body>
@@ -122,7 +137,7 @@
 
             <div class="form-row">
                 <div class="form-group"><label>المستوى الدراسي</label>
-                    <select id="eduLevel" class="form-control" onchange="toggleEduYear(this.value)">
+                    <select id="eduLevel" class="form-control" onchange="handleEducationChange(this.value)">
                         <option value="جامعي">جامعي</option>
                         <option value="ثانوي">ثانوي</option>
                         <option value="خريج">خريج</option>
@@ -132,12 +147,32 @@
                 <div class="form-group" id="yearGroup"><label>السنة الدراسية</label><input type="text" id="eduYear" class="form-control" placeholder="مثلاً: أولى"></div>
             </div>
 
+            <div class="form-group" id="majorGroup">
+                <label>التخصص الجامعي</label>
+                <input type="text" id="major" class="form-control" placeholder="مثلاً: هندسة برمجيات">
+            </div>
+
             <div class="form-group">
                 <label>اسم المستخدم (بالإنجليزي - بدون فواصل)</label>
                 <input type="text" id="username" class="form-control" placeholder="مثال: ahmed99" required>
             </div>
             
-            <div class="form-group"><label>كلمة السر</label><input type="password" id="password" class="form-control" minlength="6" required></div>
+            <div class="form-group">
+                <label>كلمة السر</label>
+                <div class="password-container">
+                    <input type="password" id="password" class="form-control" minlength="6" required>
+                    <i class="fas fa-eye toggle-password" onclick="toggleVisibility('password', this)"></i>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>تأكيد كلمة السر</label>
+                <div class="password-container">
+                    <input type="password" id="confirm_password" class="form-control" minlength="6" required onkeyup="checkPasswordMatch()">
+                    <i class="fas fa-eye toggle-password" onclick="toggleVisibility('confirm_password', this)"></i>
+                </div>
+                <span id="match-message"></span>
+            </div>
 
             <button type="submit" id="submitBtn" class="submit-btn">انضم الآن</button>
             
@@ -162,37 +197,80 @@
         const db = firebase.firestore();
         const auth = firebase.auth();
 
-        function toggleEduYear(val) {
+        // التحكم في ظهور الحقول بناءً على المستوى الدراسي
+        function handleEducationChange(val) {
             const yearGroup = document.getElementById('yearGroup');
+            const majorGroup = document.getElementById('majorGroup');
             const yearInput = document.getElementById('eduYear');
-            if (val === "لست طالباً") {
-                yearGroup.style.display = "none";
-                yearInput.value = "---";
-            } else {
+            const majorInput = document.getElementById('major');
+
+            if (val === "جامعي") {
                 yearGroup.style.display = "block";
+                majorGroup.style.display = "block";
+            } else if (val === "لست طالباً") {
+                yearGroup.style.display = "none";
+                majorGroup.style.display = "none";
+                yearInput.value = "---";
+                majorInput.value = "---";
+            } else {
+                // للثانوي أو الخريج
+                yearGroup.style.display = "block";
+                majorGroup.style.display = "none";
+                majorInput.value = "---";
+            }
+        }
+
+        function toggleVisibility(id, icon) {
+            const field = document.getElementById(id);
+            if (field.type === "password") {
+                field.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                field.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+
+        function checkPasswordMatch() {
+            const pass = document.getElementById('password').value;
+            const confirmPass = document.getElementById('confirm_password').value;
+            const msg = document.getElementById('match-message');
+            if (confirmPass.length === 0) { msg.innerHTML = ""; return; }
+            if (pass !== confirmPass) {
+                msg.style.color = "red";
+                msg.innerHTML = "⚠️ كلمات المرور غير متطابقة";
+            } else {
+                msg.style.color = "green";
+                msg.innerHTML = "✅ الكلمات متطابقة";
             }
         }
 
         document.getElementById('joinForm').onsubmit = async (e) => {
             e.preventDefault();
+            
+            const password = document.getElementById('password').value;
+            const confirm_password = document.getElementById('confirm_password').value;
+
+            if (password !== confirm_password) {
+                alert("يرجى التأكد من تطابق كلمتي المرور");
+                return;
+            }
+
             const btn = document.getElementById('submitBtn');
             btn.innerText = "جاري الحفظ...";
             btn.disabled = true;
 
             const username = document.getElementById('username').value.trim().toLowerCase();
-            const password = document.getElementById('password').value;
-            const fakeEmail = username + "@mubadara49.com"; // تحويل خلف الكواليس
-
+            const fakeEmail = username + "@mubadara49.com";
             const volType = document.getElementById('volType').value;
             let finalRank = (volType === "متطوع عام") ? "عضو برونزي" : volType + " برونزي";
 
             try {
-                // إنشاء الحساب باستخدام الإيميل الوهمي
                 const cred = await auth.createUserWithEmailAndPassword(fakeEmail, password);
 
                 await db.collection("volunteers").doc(cred.user.uid).set({
                     fullName: document.getElementById('fullName').value,
-                    username: username, // حفظ اسم المستخدم للذكرى
+                    username: username,
                     gender: document.getElementById('gender').value,
                     age: document.getElementById('age').value,
                     province: document.getElementById('province').value,
@@ -201,6 +279,7 @@
                     volType: volType,
                     eduLevel: document.getElementById('eduLevel').value,
                     eduYear: document.getElementById('eduYear').value || "---",
+                    major: document.getElementById('major').value || "---", // إضافة التخصص هنا
                     rank: finalRank,
                     status: "نشط",
                     joinDate: new Date().toLocaleDateString()
@@ -208,7 +287,7 @@
 
                 window.location.href = "profile.html";
             } catch(err) { 
-                alert("تعذر الانضمام: اسم المستخدم قد يكون مستخدماً أو كلمة السر ضعيفة"); 
+                alert("تعذر الانضمام: اسم المستخدم مستخدم سابقاً أو هناك خطأ في الاتصال"); 
                 btn.innerText = "انضم الآن";
                 btn.disabled = false;
             }

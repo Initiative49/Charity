@@ -13,7 +13,6 @@
     <style>
         :root { --main-bg: #f0f2f5; --card-bg: #ffffff; --accent-color: #2ecc71; }
         
-        /* إحكام الشاشة للموبايل ومنع الفراغات */
         html, body { 
             margin: 0; 
             padding: 0; 
@@ -26,7 +25,6 @@
 
         body { padding-bottom: 100px; }
 
-        /* الهيدر المحكم */
         .main-header { 
             display: flex; 
             justify-content: space-between; 
@@ -46,12 +44,10 @@
 
         .container { max-width: 500px; margin: 80px auto 20px; padding: 0 15px; box-sizing: border-box; }
 
-        /* رسالة الشكر */
         .thank-you-box { background: #fff; padding: 15px; border-radius: 12px; margin-bottom: 20px; border-right: 5px solid var(--accent-color); box-shadow: 0 4px 15px rgba(0,0,0,0.05); text-align: center; }
         .thank-you-box i { color: #f1c40f; margin-bottom: 8px; font-size: 20px; }
         .thank-you-box p { margin: 0; font-size: 13px; color: #444; font-weight: 500; line-height: 1.6; }
 
-        /* كرت البروفايل */
         .profile-card { background: var(--card-bg); border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1); position: relative; width: 100%; }
         
         .rank-banner { padding: 40px 20px; color: white; text-align: center; font-weight: 800; font-size: 22px; text-shadow: 0 2px 10px rgba(0,0,0,0.3); transition: 0.5s ease; }
@@ -60,13 +56,14 @@
         .user-main-info h2 { margin: 0; color: #2c3e50; font-size: 20px; line-height: 1.4; }
         .status-badge { display: inline-block; padding: 4px 12px; border-radius: 20px; font-size: 11px; background: #e8f5e9; color: #2ecc71; margin-top: 8px; font-weight: bold; }
 
-        /* شبكة البيانات */
         .info-grid { padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
         .info-item { background: #f9fafb; padding: 10px; border-radius: 10px; border: 1px solid #f0f0f0; box-sizing: border-box; }
         .info-item label { display: block; font-size: 10px; color: #999; margin-bottom: 4px; font-weight: bold; }
         .info-item b { font-size: 12px; color: #333; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-        /* الفوتر المحكم */
+        /* جعل التخصص يأخذ مساحة كاملة إذا كان طويلاً */
+        .info-item.full-width { grid-column: span 2; }
+
         .fixed-footer { 
             background: #111; 
             color: #999; 
@@ -116,6 +113,7 @@
                 <div class="info-item"><label><i class="fas fa-hands-helping"></i> النوع</label><b id="uVol">--</b></div>
                 <div class="info-item"><label><i class="fas fa-graduation-cap"></i> المستوى</label><b id="uEdu">--</b></div>
                 <div class="info-item"><label><i class="fas fa-calendar-alt"></i> السنة</label><b id="uYear">--</b></div>
+                <div class="info-item full-width" id="majorBox"><label><i class="fas fa-book"></i> التخصص الدراسي</label><b id="uMajor">---</b></div>
             </div>
         </div>
     </div>
@@ -137,7 +135,6 @@
 
         auth.onAuthStateChanged(user => {
             if(user) {
-                // الجلب باستخدام UID يضمن عمل الحسابات القديمة والجديدة معاً
                 db.collection("volunteers").doc(user.uid).onSnapshot(doc => {
                     if (doc.exists) {
                         const d = doc.data();
@@ -148,74 +145,81 @@
                         document.getElementById('uEdu').innerText = d.eduLevel;
                         document.getElementById('uYear').innerText = d.eduYear || "---";
                         document.getElementById('uBio').innerText = d.gender + " / " + d.age;
+                        
+                        // جلب التخصص وإخفاء الحقل إذا لم يكن هناك تخصص
+                        if(d.major && d.major !== "---") {
+                            document.getElementById('uMajor').innerText = d.major;
+                            document.getElementById('majorBox').style.display = "block";
+                        } else {
+                            document.getElementById('majorBox').style.display = "none";
+                        }
+
                         updateRankStyle(d.rank || "متطوع");
                     }
                 });
             } else { window.location.href = "login.html"; }
         });
-function updateRankStyle(rank) {
-    const banner = document.getElementById('rankBanner');
-    const thankText = document.getElementById('thankText');
-    banner.innerText = rank;
 
-    let bg = "linear-gradient(45deg, #7f8c8d, #95a5a6)"; // اللون الافتراضي (رمادي)
-    let message = "شكراً لانضمامك إلينا، جهودك هي حجر الأساس في مبادرة 49.";
+        function updateRankStyle(rank) {
+            const banner = document.getElementById('rankBanner');
+            const thankText = document.getElementById('thankText');
+            banner.innerText = rank;
 
-    // نظام الألوان والرسائل بناءً على الرتب والمناصب
-    if (rank.includes("برونزي")) {
-        bg = "linear-gradient(45deg, #cd7f32, #8b4513)";
-        message = "بداية مباركة يا بطل! رتبتك البرونزية هي أول خطوة في طريق العطاء.";
-    } 
-    else if (rank.includes("فضي")) {
-        bg = "linear-gradient(45deg, #bdc3c7, #7f8c8d)";
-        message = "رائع! ترقيتك للرتبة الفضية تعكس تفانيك المستمر في المبادرة.";
-    }
-    else if (rank.includes("ذهبي")) {
-        bg = "linear-gradient(45deg, #f1c40f, #d4af37)";
-        message = "أنت مشعل ضياء في عائلتنا! الرتبة الذهبية تليق بجهودك الاستثنائية.";
-    }
-    else if (rank.includes("بلاتنيوم")) {
-        bg = "linear-gradient(45deg, #e5e4e2, #b4b4b4)";
-        message = "مستوى البلاتنيوم! حضورك القوي وتأثيرك ملموس في كل زاوية.";
-    }
-    else if (rank.includes("ماسي")) {
-        bg = "linear-gradient(45deg, #b9f2ff, #2980b9)";
-        message = "أنت جوهرة المبادرة! الرتبة الماسية تقدير لإخلاصك الذي لا يقدر بثمن.";
-    }
-    else if (rank.includes("أسطوري")) {
-        bg = "linear-gradient(45deg, #6a11cb, #2575fc)";
-        message = "الأسطورة! لقد تجاوزت كل التوقعات، شكراً لكونك قدوة لنا جميعاً.";
-    }
-    else if (rank.includes("مشتريات")) {
-        bg = "linear-gradient(45deg, #66a6ff, #2c5364)";
-        message = "شكرا لك على تفانيك في اختيار الأنسب للمبادرة وتوفير كل ما يلزم، أنت يد المبادرة.";
-    }
-else if (rank.includes("المواقع")) {
-        bg = "linear-gradient(45deg, #4169E1, #0000FF)";
-        message = "ممتنون لإخلاصك في إدارة مجتمعاتنا الرقمية، وشغفك الذي جعل من محتوى مبادرة 49 منارة للعطاء..";
-    }
-    // المناصب الإدارية
-    else if (rank.includes("رئيس") || rank.includes("مدير")) {
-        bg = "linear-gradient(45deg, #000000, #434343)";
-        message = "قيادتك الحكيمة هي ما يدفعنا للأمام. شكراً لتحملك المسؤولية.";
-    }
-    else if (rank.includes("مصمم") || rank.includes("مصور")) {
-        bg = "linear-gradient(45deg, #ff00cc, #3333ff)";
-        message = "لمساتك الإبداعية تمنح المبادرة روحاً وجمالاً. شكراً لإبداعك.";
-    }
-    else if (rank.includes("مالي") || rank.includes("محصل")) {
-        bg = "linear-gradient(45deg, #11998e, #38ef7d)";
-        message = "شكراً لأمانتك ودقتك في إدارة الموارد، أنت صمام الأمان المالي.";
-    }
-    else if (rank.includes("علاقات") || rank.includes("مشاريع")) {
-        bg = "linear-gradient(45deg, #f093fb, #f5576c)";
-        message = "شكراً لجهودك في بناء الجسور وتنظيم المشاريع باحترافية.";
-    }
+            let bg = "linear-gradient(45deg, #7f8c8d, #95a5a6)"; 
+            let message = "شكراً لانضمامك إلينا، جهودك هي حجر الأساس في مبادرة 49.";
 
-    // تطبيق التغييرات على الصفحة
-    banner.style.background = bg;
-    thankText.innerText = message;
-}
+            if (rank.includes("برونزي")) {
+                bg = "linear-gradient(45deg, #cd7f32, #8b4513)";
+                message = "بداية مباركة يا بطل! رتبتك البرونزية هي أول خطوة في طريق العطاء.";
+            } 
+            else if (rank.includes("فضي")) {
+                bg = "linear-gradient(45deg, #bdc3c7, #7f8c8d)";
+                message = "رائع! ترقيتك للرتبة الفضية تعكس تفانيك المستمر في المبادرة.";
+            }
+            else if (rank.includes("ذهبي")) {
+                bg = "linear-gradient(45deg, #f1c40f, #d4af37)";
+                message = "أنت مشعل ضياء في عائلتنا! الرتبة الذهبية تليق بجهودك الاستثنائية.";
+            }
+            else if (rank.includes("بلاتنيوم")) {
+                bg = "linear-gradient(45deg, #e5e4e2, #b4b4b4)";
+                message = "مستوى البلاتنيوم! حضورك القوي وتأثيرك ملموس في كل زاوية.";
+            }
+            else if (rank.includes("ماسي")) {
+                bg = "linear-gradient(45deg, #b9f2ff, #2980b9)";
+                message = "أنت جوهرة المبادرة! الرتبة الماسية تقدير لإخلاصك الذي لا يقدر بثمن.";
+            }
+            else if (rank.includes("أسطوري")) {
+                bg = "linear-gradient(45deg, #6a11cb, #2575fc)";
+                message = "الأسطورة! لقد تجاوزت كل التوقعات، شكراً لكونك قدوة لنا جميعاً.";
+            }
+            else if (rank.includes("مشتريات")) {
+                bg = "linear-gradient(45deg, #66a6ff, #2c5364)";
+                message = "شكرا لك على تفانيك في اختيار الأنسب للمبادرة وتوفير كل ما يلزم، أنت يد المبادرة.";
+            }
+            else if (rank.includes("المواقع")) {
+                bg = "linear-gradient(45deg, #4169E1, #0000FF)";
+                message = "ممتنون لإخلاصك في إدارة مجتمعاتنا الرقمية، وشغفك الذي جعل من محتوى مبادرة 49 منارة للعطاء..";
+            }
+            else if (rank.includes("رئيس") || rank.includes("مدير")) {
+                bg = "linear-gradient(45deg, #000000, #434343)";
+                message = "قيادتك الحكيمة هي ما يدفعنا للأمام. شكراً لتحملك المسؤولية.";
+            }
+            else if (rank.includes("مصمم") || rank.includes("مصور")) {
+                bg = "linear-gradient(45deg, #ff00cc, #3333ff)";
+                message = "لمساتك الإبداعية تمنح المبادرة روحاً وجمالاً. شكراً لإبداعك.";
+            }
+            else if (rank.includes("مالي") || rank.includes("محصل")) {
+                bg = "linear-gradient(45deg, #11998e, #38ef7d)";
+                message = "شكراً لأمانتك ودقتك في إدارة الموارد، أنت صمام الأمان المالي.";
+            }
+            else if (rank.includes("علاقات") || rank.includes("مشاريع")) {
+                bg = "linear-gradient(45deg, #f093fb, #f5576c)";
+                message = "شكراً لجهودك في بناء الجسور وتنظيم المشاريع باحترافية.";
+            }
+
+            banner.style.background = bg;
+            thankText.innerText = message;
+        }
 
         function handleLogout() {
             auth.signOut().then(() => { window.location.href = "login.html"; });

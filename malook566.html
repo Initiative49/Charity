@@ -18,28 +18,26 @@
         html, body { margin: 0; padding: 0; width: 100%; overflow-x: hidden; font-family: 'Segoe UI', sans-serif; background: #f4f7f6; }
         body { padding-bottom: 100px; }
         
-        /* الهيدر */
         .main-header { display: flex; justify-content: space-between; align-items: center; padding: 0 4%; background: #000; color: white; height: 60px; position: fixed; top: 0; width: 100%; z-index: 1000; box-sizing: border-box; }
         .header-logo { width: 35px; height: 35px; border-radius: 5px; }
 
         .container { padding: 80px 15px 20px; width: 100%; max-width: 1200px; margin: auto; box-sizing: border-box; }
 
-        /* إحصائيات وأزرار سريعة */
         .top-bar { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .stat-item { background: white; padding: 12px 20px; border-radius: 12px; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-right: 5px solid var(--accent-color); }
         
         .excel-btn { background: #27ae60; color: white; border: none; padding: 10px 18px; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 13px; transition: 0.3s; }
         .excel-btn:hover { background: #1e8449; }
 
-        /* الفرز الذكي (Pills) */
-        .filter-container { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; overflow-x: auto; padding-bottom: 5px; }
+        /* الفرز الذكي المعدل */
+        .filter-container { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; padding-bottom: 5px; }
         .pill { padding: 6px 14px; background: #ddd; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: bold; color: #555; transition: 0.3s; white-space: nowrap; }
         .pill.active { background: var(--accent-color); color: white; }
+        .pill.gender-pill { background: #34495e; color: white; } /* تمييز أزرار الجنس */
 
-        /* الجدول */
         .table-wrapper { background: white; border-radius: 12px; overflow-x: auto; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #eee; }
-        table { width: 100%; border-collapse: collapse; min-width: 1000px; }
-        th, td { padding: 12px 10px; text-align: right; border-bottom: 1px solid #eee; font-size: 12.5px; }
+        table { width: 100%; border-collapse: collapse; min-width: 1100px; }
+        th, td { padding: 12px 10px; text-align: right; border-bottom: 1px solid #eee; font-size: 12px; }
         th { background: #f8f9fa; color: #555; font-weight: bold; }
         
         .rank-tag { padding: 3px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; color: white; }
@@ -47,7 +45,6 @@
         .btn-edit { background: var(--edit-color); color: white; border: none; padding: 6px; border-radius: 4px; cursor: pointer; }
         .btn-delete { background: var(--danger-color); color: white; border: none; padding: 6px; border-radius: 4px; cursor: pointer; }
 
-        /* المودال */
         .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; align-items: center; justify-content: center; }
         .modal-content { background: white; width: 92%; max-width: 550px; padding: 20px; border-radius: 15px; max-height: 85vh; overflow-y: auto; }
         .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -73,7 +70,7 @@
             <div class="stat-item">
                 <i class="fas fa-users" style="color:var(--accent-color)"></i>
                 <div>
-                    <div style="font-size:10px; color:#888;">إجمالي المتطوعين</div>
+                    <div style="font-size:10px; color:#888;">المعروض حالياً</div>
                     <div id="vCount" style="font-size:18px; font-weight:bold;">0</div>
                 </div>
             </div>
@@ -86,9 +83,9 @@
             <div class="pill active" onclick="filterData('الكل', this)">الكل</div>
             <div class="pill" onclick="filterData('ميداني', this)">ميداني</div>
             <div class="pill" onclick="filterData('إلكتروني', this)">إلكتروني</div>
-            <div class="pill" onclick="filterData('ذهبي', this)">الرتب الذهبية</div>
+            <div class="pill" onclick="filterData('داعم', this)">الداعمين</div> <div class="pill" onclick="filterData('ذهبي', this)">الرتب الذهبية</div>
             <div class="pill" onclick="filterData('رئيس', this)">القيادة</div>
-            <div class="pill" onclick="filterData('مرفوض', this)">المرفوضين</div>
+            <div class="pill gender-pill" onclick="filterData('ذكر', this)">♂ ذكور</div> <div class="pill gender-pill" onclick="filterData('أنثى', this)">♀ إناث</div> <div class="pill" onclick="filterData('مرفوض', this)">المرفوضين</div>
         </div>
 
         <div class="table-wrapper">
@@ -96,12 +93,11 @@
                 <thead>
                     <tr>
                         <th>الاسم الرباعي</th>
-                        <th>اسم المستخدم</th>
-                        <th>الجنس/العمر</th>
+                        <th>التخصص</th> <th>الجنس/العمر</th>
                         <th>الموقع</th>
                         <th>الهاتف</th>
-                        <th>النوع</th>
-                        <th>الرتبة/المنصب</th>
+                        <th>نوع التطوع</th>
+                        <th>الرتبة</th>
                         <th>الحالة</th>
                         <th>التحكم</th>
                     </tr>
@@ -117,7 +113,7 @@
             <input type="hidden" id="editId">
             <div class="modal-grid">
                 <div class="form-group full"><label>الاسم الرباعي</label><input type="text" id="editName"></div>
-                <div class="form-group"><label>اسم المستخدم</label><input type="text" id="editUser"></div>
+                <div class="form-group full"><label>التخصص</label><input type="text" id="editMajor"></div> <div class="form-group"><label>اسم المستخدم</label><input type="text" id="editUser"></div>
                 <div class="form-group"><label>رقم الهاتف</label><input type="text" id="editPhone"></div>
                 <div class="form-group"><label>المحافظة</label><input type="text" id="editProv"></div>
                 <div class="form-group"><label>المديرية</label><input type="text" id="editDist"></div>
@@ -154,7 +150,6 @@
 
         let allVolunteers = [];
 
-        // التأمين الصارم
         auth.onAuthStateChanged(user => {
             if (user && user.email === "initiative49@gmail.com") {
                 loadData();
@@ -187,7 +182,7 @@
                 tbody.innerHTML += `
                     <tr>
                         <td><b>${d.fullName}</b></td>
-                        <td style="color:#777; font-size:11px;">${d.username || 'إيميل قديم'}</td>
+                        <td style="color:#2980b9;">${d.major || '---'}</td>
                         <td>${d.gender} / ${d.age}</td>
                         <td>${d.province}</td>
                         <td>${d.phone}</td>
@@ -205,11 +200,21 @@
             });
         }
 
+        // دالة الفلترة المطورة لتشمل الجنس والداعمين
         function filterData(type, el) {
             document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
             el.classList.add('active');
-            if(type === 'الكل') return renderTable(allVolunteers);
-            const filtered = allVolunteers.filter(v => (v.volType + v.rank + v.status).includes(type));
+
+            if(type === 'الكل') {
+                renderTable(allVolunteers);
+                return;
+            }
+
+            const filtered = allVolunteers.filter(v => {
+                const searchArea = (v.volType + v.rank + v.status + v.gender).toLowerCase();
+                return searchArea.includes(type.toLowerCase());
+            });
+            
             renderTable(filtered);
         }
 
@@ -217,6 +222,7 @@
             const d = allVolunteers.find(v => v.id === id);
             document.getElementById('editId').value = id;
             document.getElementById('editName').value = d.fullName;
+            document.getElementById('editMajor').value = d.major || ""; // جلب التخصص للمودال
             document.getElementById('editUser').value = d.username || "";
             document.getElementById('editPhone').value = d.phone;
             document.getElementById('editProv').value = d.province;
@@ -231,6 +237,7 @@
             const id = document.getElementById('editId').value;
             await db.collection("volunteers").doc(id).update({
                 fullName: document.getElementById('editName').value,
+                major: document.getElementById('editMajor').value, // حفظ التخصص
                 username: document.getElementById('editUser').value,
                 phone: document.getElementById('editPhone').value,
                 province: document.getElementById('editProv').value,
@@ -240,16 +247,16 @@
                 status: document.getElementById('editStatus').value
             });
             closeModal();
-            alert("تم التعديل!");
+            alert("تم تحديث البيانات بنجاح!");
         }
 
         function exportToExcel() {
             const table = document.getElementById("adminTable");
             const wb = XLSX.utils.table_to_book(table, {sheet: "المتطوعين"});
-            XLSX.writeFile(wb, `مبادرة_49_بيانات_${new Date().toLocaleDateString()}.xlsx`);
+            XLSX.writeFile(wb, `مبادرة_49_تحديث_${new Date().toLocaleDateString()}.xlsx`);
         }
 
-        function deleteUser(id, name) { if(confirm(`حذف ${name}؟`)) db.collection("volunteers").doc(id).delete(); }
+        function deleteUser(id, name) { if(confirm(`هل أنت متأكد من حذف ${name} نهائياً؟`)) db.collection("volunteers").doc(id).delete(); }
         function closeModal() { document.getElementById('editModal').style.display = 'none'; }
         function handleLogout() { auth.signOut().then(() => window.location.href = "login.html"); }
     </script>
